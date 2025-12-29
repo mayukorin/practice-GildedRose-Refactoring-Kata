@@ -6,53 +6,33 @@
 ## 概要
 
 このドキュメントでは、通常アイテムの振る舞いを以下の形式で形式化します：
-1. 状態遷移図（sellInの状態）
+1. 状態遷移図（Qualityの状態）
 2. デシジョンテーブル（条件と結果の対応）
 3. 境界値分析
-4. エッジケース一覧
+
+## SellInについて
+
+requirementsで言及された`sellIn`は「販売期限日までの残り日数」を表します。毎日-1されます。
+
+sellInの値による状態分類：
+- **sellIn >= 1**: 期限まで残り日数あり（通常劣化）
+- **sellIn = 0**: 期限当日（実装上は期限切れ扱い）
+- **sellIn < 0**: 期限切れ（期限を過ぎた日数）
 
 ## 1. 状態遷移図
 
-### SellInの状態遷移
-
-通常アイテムのsellInは、その値によって3つの状態に分類できます：
-
 ```mermaid
 stateDiagram-v2
-    [*] --> sellIn_ge_1: 初期状態（sellIn >= 1）
-    sellIn_ge_1 --> sellIn_0: 1日経過 [sellIn = 1] / sellIn -= 1
-    sellIn_0 --> sellIn_le_minus1: 1日経過 [sellIn = 0] / sellIn -= 1
-    sellIn_le_minus1 --> sellIn_le_minus1: 1日経過 / sellIn -= 1
+    [*] --> normal: quality > 0
+    normal --> normal: 1日経過 [quality > 0] / quality減少
+    normal --> zero: quality減少で到達
+    zero --> zero: 1日経過 / 変化なし
 
-    sellIn_ge_1: sellIn >= 1
-    sellIn_0: sellIn = 0
-    sellIn_le_minus1: sellIn <= -1
-```
-
-### Qualityの状態遷移
-
-```mermaid
-stateDiagram-v2
-    [*] --> quality_gt_2: 初期状態（quality > 2）
-
-    quality_gt_2 --> quality_gt_2: 1日経過 [sellIn >= 1, quality > 3] / quality -= 1
-    quality_gt_2 --> quality_gt_2: 1日経過 [sellIn <= 0, quality > 4] / quality -= 2
-    quality_gt_2 --> quality_eq_2: 1日経過 [sellIn >= 1, quality = 3] / quality -= 1
-    quality_gt_2 --> quality_eq_2: 1日経過 [sellIn <= 0, quality = 4] / quality -= 2
-    quality_gt_2 --> quality_eq_1: 1日経過 [sellIn <= 0, quality = 3] / quality -= 2
-
-    quality_eq_2 --> quality_eq_1: 1日経過 [sellIn >= 1] / quality -= 1
-    quality_eq_2 --> quality_eq_0: 1日経過 [sellIn <= 0] / quality -= 2
-
-    quality_eq_1 --> quality_eq_0: 1日経過 [sellIn >= 1] / quality -= 1
-    quality_eq_1 --> quality_eq_0: 1日経過 [sellIn <= 0] / quality -= 1
-
-    quality_eq_0 --> quality_eq_0: 1日経過
-
-    quality_gt_2: quality > 2
-    quality_eq_2: quality = 2
-    quality_eq_1: quality = 1
-    quality_eq_0: quality = 0
+    note right of normal
+        期限内: quality -= 1
+        期限切れ: quality -= 2
+        (下限制約により調整)
+    end note
 ```
 
 ## 2. デシジョンテーブル
@@ -74,7 +54,7 @@ stateDiagram-v2
 |-------|-----|---------|
 | sellIn = 2 | 期限内（境界の1つ前） | quality -1 |
 | sellIn = 1 | 期限内（境界） | quality -1、次の日が期限当日 |
-| sellIn = 0 | 期限当日 | **quality -2**（重要な境界） |
+| sellIn = 0 | 期限当日（期限切れ扱い） | **quality -2**（重要な境界） |
 | sellIn = -1 | 期限切れ（境界の1つ後） | quality -2 |
 
 **「期限切れ」の定義**: `sellIn < 0`（**更新後**の値）
