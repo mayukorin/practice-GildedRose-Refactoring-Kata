@@ -15,13 +15,11 @@
 docs/
 ├── requirements/              # フェーズ1の成果物（アイテム毎）
 │   ├── normal-item/
-│   │   ├── requirements-extraction.md  # 要件抽出結果
-│   │   ├── code-analysis.md            # コード分析結果
-│   │   └── gap-analysis.md             # 要件とコードの差分分析
+│   │   ├── analysis.md           # ステップ1-1〜1-3の詳細な分析プロセス
+│   │   └── final-analysis.md     # ステップ1-4の確定仕様（簡潔版）
 │   ├── aged-brie/
-│   │   ├── requirements-extraction.md
-│   │   ├── code-analysis.md
-│   │   └── gap-analysis.md
+│   │   ├── analysis.md
+│   │   └── final-analysis.md
 │   └── ... (他のアイテムタイプも同様)
 │
 ├── analysis/                  # フェーズ2の成果物（アイテム毎）
@@ -48,83 +46,25 @@ docs/
 
 ## フェーズ1: 要件収集・分析
 
-**ステップ1-1: 要件の抽出**
-- **担当**: Claude主導
-- **内容**: GildedRoseRequirements.mdから対象アイテムの要件を抽出
-- **成果物**: `docs/requirements/[item-type]/requirements-extraction.md`
+**詳細**: `requirements-analysis.md` を参照
 
-**ステップ1-2: 既存コードの振る舞い確認**
-- **担当**: Claude主導
-- **内容**: 既存のupdateQualityメソッドから対象アイテムの処理を分析
-- **成果物**: `docs/requirements/[item-type]/code-analysis.md`
-
-**ステップ1-3: 要件とコードの差分確認（人間レビュー）**
-- **担当**: 人間主導、Claude支援
-- **内容**:
-  - ステップ1-1, 1-2の成果物をまとめてレビュー
-  - 要件とコードの振る舞いが一致しているか確認
-  - 差分がある場合、どちらを「正」とするか判断
-- **成果物**: `docs/requirements/[item-type]/gap-analysis.md`
-- **判定**: OK → フェーズ2へ / NG → フェーズ1のやり直し
+**成果物**:
+- `docs/requirements/[item-type]/analysis.md` - 詳細な分析プロセス
+- `docs/requirements/[item-type]/final-analysis.md` - 確定仕様（簡潔版）
 
 ## フェーズ2: 振る舞いの形式化
 
-**ステップ2-1: 分析図表の作成**
-- **担当**: Claude主導、人間レビュー
-- **内容**: 状態遷移図またはデシジョンテーブルを作成
-- **成果物**: `docs/analysis/[item-type].md`
-- **反復**: 修正が必要な場合、ステップ2-1を繰り返す
+**詳細**: `behavior-formalization.md` を参照
 
-**ステップ2-2: エッジケースの洗い出し**
-- **担当**: Claude主導、人間確認
-- **内容**: 境界値、特殊ケースをリストアップ
-- **成果物**: `docs/analysis/[item-type].md` に追記
+**成果物**:
+- `docs/analysis/[item-type].md` - テスト分析（状態遷移図/デシジョンテーブル、境界値分析、エッジケース）
 
 ## フェーズ3: Gherkin仕様書の作成
 
-**ステップ3-1: Gherkinシナリオ生成**
-- **担当**: Claude主導
-- **内容**:
-  - 分析図表からGherkinシナリオを生成
-  - ドメインルール（Rule）を抽出し、アイテム毎のScenarioを整理
-- **成果物**: `docs/specifications/gilded-rose.feature`（全アイテムを含む1ファイル、追記形式）
+**詳細**: `gherkin-specification.md` を参照
 
-**Gherkin構造例**:
-```gherkin
-Feature: Gilded Rose在庫品質管理
-
-  Rule: すべてのアイテムは品質値0未満にならない
-    Scenario: 通常アイテムの品質下限
-      Given ...
-    Scenario: Aged Brieの品質下限
-      Given ...
-
-  Rule: Aged Brieは古くなるほど品質が上がる
-    Scenario: 販売期限内でのquality増加
-      Given ...
-    Scenario: 販売期限切れでのquality増加（2倍速）
-      Given ...
-
-  # 以降、各アイテムのルールとシナリオが続く
-```
-
-**ステップ3-2: 人間レビュー**
-- **担当**: 人間
-- **チェック項目**:
-  - [ ] 要件（GildedRoseRequirements.md）との整合性
-  - [ ] 分析図表との整合性
-  - [ ] エッジケースの網羅性
-  - [ ] ドメインルールの抽出が適切か
-  - [ ] 可読性
-- **判定**:
-  - Gherkinのみの修正が必要 → ステップ3-1に戻る
-  - 分析が不十分（例: Scenarioを書こうとしたら分析図表に抜けがあると気づいた） → **人間の判断でフェーズ2に戻る**
-  - OK → ステップ3-3へ
-
-**ステップ3-3: 承認**
-- **担当**: 人間
-- **内容**: Gherkin仕様書を承認
-- **成果物**: 確定版 `docs/specifications/gilded-rose.feature`
+**成果物**:
+- `docs/specifications/gilded-rose.feature` - Gherkin仕様書（全アイテムを含む1ファイル、追記形式）
 
 ## フェーズ4: 振り返りと次のイテレーション
 
@@ -144,22 +84,22 @@ Feature: Gilded Rose在庫品質管理
   ステップ0-1: アイテム選定 (人間)
   ↓
 [フェーズ1: 要件収集・分析]
-  ステップ1-1: 要件抽出 (Claude)
-  ステップ1-2: コード分析 (Claude)
-  ステップ1-3: まとめてレビュー・差分確認 (人間主導) → OK?
-    NG → フェーズ1のやり直し
+  ステップ1-1: 要件抽出 (Claude) → analysis.md作成
+  ステップ1-2: コード分析 (Claude) → analysis.mdに追記
+  ステップ1-3: 差分確認 (Claude + 人間レビュー) → analysis.mdに追記 → OK?
+    NG → 該当ステップのやり直し
+  ステップ1-4: 確定仕様作成 (Claude) → final-analysis.md作成 → 人間承認 → OK?
+    NG → ステップ1-4のやり直し
   ↓
 [フェーズ2: 振る舞いの形式化]
-  ステップ2-1: 分析図表作成 (Claude) → 人間レビュー → OK?
-    NG → ステップ2-1繰り返し
-  ステップ2-2: エッジケース洗い出し (Claude) → 人間確認
+  ステップ2-1: テスト分析 (Claude) → 人間レビュー → OK?
+    NG → ステップ2-1のやり直し
   ↓
 [フェーズ3: Gherkin仕様書作成]
-  ステップ3-1: Gherkin生成 (Claude)
-  ステップ3-2: 人間レビュー → OK?
-    Gherkinのみ修正 → ステップ3-1に戻る
-    分析不十分 → 人間判断でフェーズ2に戻る
-  ステップ3-3: 承認
+  ステップ3-1: Ruleの抽出 (Claude) → 人間レビュー → OK?
+    NG → ステップ3-1のやり直し
+  ステップ3-2: Scenarioの作成 (Claude) → 人間レビュー → OK?
+    NG → ステップ3-2のやり直し
   ↓
 [フェーズ4: 振り返り]
   ステップ4-1: 振り返り記録
