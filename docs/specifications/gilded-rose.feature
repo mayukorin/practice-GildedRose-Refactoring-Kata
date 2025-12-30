@@ -79,6 +79,67 @@ Feature: Gilded Rose在庫品質管理システム
       Then そのアイテムの品質は80である
 
   # ========================================
+  # Backstage passes to a TAFKAL80ETC concert
+  # ========================================
+
+  Rule: Backstage passesはコンサート11日以上前では毎日品質が1ずつ向上する
+
+    Scenario: コンサート11日前で次の日に品質が1向上している
+      Given 品質が10の「Backstage passes to a TAFKAL80ETC concert」が存在する
+      And そのアイテムのコンサートまであと11日である
+      When 1日経過する
+      Then そのアイテムの品質は11である
+      And そのアイテムのコンサートまであと10日である
+
+  Rule: Backstage passesはコンサート10日以内では毎日品質が2ずつ向上する
+
+    Scenario: コンサート10日前で次の日に品質が2向上している
+      Given 品質が10の「Backstage passes to a TAFKAL80ETC concert」が存在する
+      And そのアイテムのコンサートまであと10日である
+      When 1日経過する
+      Then そのアイテムの品質は12である
+      And そのアイテムのコンサートまであと9日である
+
+    Scenario: コンサート6日前で次の日に品質が2向上している
+      Given 品質が10の「Backstage passes to a TAFKAL80ETC concert」が存在する
+      And そのアイテムのコンサートまであと6日である
+      When 1日経過する
+      Then そのアイテムの品質は12である
+      And そのアイテムのコンサートまであと5日である
+
+  Rule: Backstage passesはコンサート5日以内では毎日品質が3ずつ向上する
+
+    Scenario: コンサート5日前で次の日に品質が3向上している
+      Given 品質が10の「Backstage passes to a TAFKAL80ETC concert」が存在する
+      And そのアイテムのコンサートまであと5日である
+      When 1日経過する
+      Then そのアイテムの品質は13である
+      And そのアイテムのコンサートまであと4日である
+
+    Scenario: コンサート1日前で次の日に品質が3向上している
+      Given 品質が10の「Backstage passes to a TAFKAL80ETC concert」が存在する
+      And そのアイテムのコンサートまであと1日である
+      When 1日経過する
+      Then そのアイテムの品質は13である
+      And そのアイテムはコンサート当日である
+
+  Rule: Backstage passesはコンサート終了後に品質が0になる
+
+    Scenario: コンサート当日で次の日に品質が0になる
+      Given 品質が10の「Backstage passes to a TAFKAL80ETC concert」が存在する
+      And そのアイテムはコンサート当日である
+      When 1日経過する
+      Then そのアイテムの品質は0である
+      And そのアイテムはコンサートを1日過ぎている
+
+    Scenario: コンサート終了後で次の日も品質が0のまま
+      Given 品質が10の「Backstage passes to a TAFKAL80ETC concert」が存在する
+      And そのアイテムはコンサートを1日過ぎている
+      When 1日経過する
+      Then そのアイテムの品質は0である
+      And そのアイテムはコンサートを2日過ぎている
+
+  # ========================================
   # 共通ルール
   # ========================================
 
@@ -104,6 +165,48 @@ Feature: Gilded Rose在庫品質管理システム
       When 1日経過する
       Then そのアイテムの品質は50である
       And そのアイテムは販売期限を1日過ぎている
+
+    Scenario: Backstage passesについて、コンサート11日前で品質が50の場合、次の日になっても品質は50のままである
+      Given 品質が50の「Backstage passes to a TAFKAL80ETC concert」が存在する
+      And そのアイテムのコンサートまであと11日である
+      When 1日経過する
+      Then そのアイテムの品質は50である
+      And そのアイテムのコンサートまであと10日である
+
+    Scenario: Backstage passesについて、コンサート10日前で品質が50の場合、次の日になっても品質は50のままである
+      Given 品質が50の「Backstage passes to a TAFKAL80ETC concert」が存在する
+      And そのアイテムのコンサートまであと10日である
+      When 1日経過する
+      Then そのアイテムの品質は50である
+      And そのアイテムのコンサートまであと9日である
+
+    Scenario: Backstage passesについて、コンサート10日前で品質が49の場合、次の日に51にはならず50になる
+      Given 品質が49の「Backstage passes to a TAFKAL80ETC concert」が存在する
+      And そのアイテムのコンサートまであと10日である
+      When 1日経過する
+      Then そのアイテムの品質は50である
+      And そのアイテムのコンサートまであと9日である
+
+    Scenario: Backstage passesについて、コンサート5日前で品質が50の場合、次の日になっても品質は50のままである
+      Given 品質が50の「Backstage passes to a TAFKAL80ETC concert」が存在する
+      And そのアイテムのコンサートまであと5日である
+      When 1日経過する
+      Then そのアイテムの品質は50である
+      And そのアイテムのコンサートまであと4日である
+
+    Scenario: Backstage passesについて、コンサート5日前で品質が48の場合、次の日に51にはならず50になる
+      Given 品質が48の「Backstage passes to a TAFKAL80ETC concert」が存在する
+      And そのアイテムのコンサートまであと5日である
+      When 1日経過する
+      Then そのアイテムの品質は50である
+      And そのアイテムのコンサートまであと4日である
+
+    Scenario: Backstage passesについて、コンサート5日前で品質が49の場合、次の日に52にも51にもならず50になる
+      Given 品質が49の「Backstage passes to a TAFKAL80ETC concert」が存在する
+      And そのアイテムのコンサートまであと5日である
+      When 1日経過する
+      Then そのアイテムの品質は50である
+      And そのアイテムのコンサートまであと4日である
 
   Rule: すべてのアイテムは品質値が0未満にならない
 
