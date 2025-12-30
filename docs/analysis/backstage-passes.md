@@ -85,10 +85,8 @@ stateDiagram-v2
 | sellIn = 12 | 11日以上前（境界の1つ前） | quality +1 |
 | sellIn = 11 | 11日以上前（境界） | quality +1、次の日が10日以内 |
 | sellIn = 10 | 10日以内（境界） | **quality +2**（重要な境界） |
-| sellIn = 7 | 10日以内（中間） | quality +2 |
 | sellIn = 6 | 10日以内（境界の1つ前） | quality +2、次の日が5日以内 |
 | sellIn = 5 | 5日以内（境界） | **quality +3**（重要な境界） |
-| sellIn = 3 | 5日以内（中間） | quality +3 |
 | sellIn = 1 | 5日以内（境界の1つ前） | quality +3、次の日が当日 |
 | sellIn = 0 | コンサート当日（終了扱い） | **quality = 0**（重要な境界） |
 | sellIn = -1 | コンサート終了後（境界の1つ後） | quality = 0 |
