@@ -42,7 +42,7 @@
 - **担当**: Claude主導、人間レビュー
 - **制約**: クラス設計テンプレート（`.claude/references/class-design-template.md`）に従って設計書を作成すること
 - **成果物**: `docs/refactoring/class-design.md`
-- **判定**:
+- **人間による判定**:
   - OK → フェーズ3へ
   - NG → ステップ2のやり直し
 

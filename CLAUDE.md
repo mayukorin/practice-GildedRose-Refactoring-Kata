@@ -59,10 +59,16 @@ Java/
 
 ```
 docs/
-├── analysis/                  # 振る舞い分析の成果物（アイテム毎）
+├── analysis/                  # 振る舞い分析の成果物
 │   └── [item-type].md         # 状態遷移図/デシジョンテーブル
-└── specifications/            # 形式化された仕様書
-    └── gilded-rose.feature    # Gherkin仕様書（全アイテム統合版）
+├── specifications/            # 形式化された仕様書
+│   └── gilded-rose.feature    # Gherkin仕様書（全アイテム統合版）
+└── refactoring/               # リファクタリングフローの成果物
+    ├── domain-analysis/       # ドメイン分析資料（アイテム毎）
+    │   └── [item-type].md
+    ├── class-design.md        # クラス設計書（全アイテム統合版）
+    ├── test-plans/            # テスト実装計画（未実装）
+    └── reviews/               # レビュー記録（未実装）
 ```
 
 ## 開発フロー
@@ -78,23 +84,19 @@ docs/
   - 分析資料（`docs/analysis/`）
 - **詳細な手順**: `.claude/skills/spec-driven-requirements/skill.md` を参照
 
-### 2. 要件定義書に基づいてテストを実装する
+### 2. リファクタリングする
 - **インプット**:
   - Gherkin仕様書（`docs/specifications/gilded-rose.feature`）
   - 分析資料（`docs/analysis/`）
-- **アウトプット**:
-  - テストコード（`Java/src/test/java/com/gildedrose/` 配下）
-- **詳細な手順**: ※今後、`.claude/skills/` 配下にスキルとして作成予定
-
-### 3. テストが通るようにリファクタリングする
-- **インプット**:
   - 既存コード（`Java/src/main/java/com/gildedrose/GildedRose.java`）
-  - テストコード
 - **アウトプット**:
-  - リファクタリングされたコード
-- **詳細な手順**: ※今後、`.claude/skills/` 配下にスキルとして作成予定
+  - ドメイン分析資料（`docs/refactoring/domain-analysis/`）
+  - クラス設計書（`docs/refactoring/class-design.md`）
+  - テストコード（`Java/src/test/java/com/gildedrose/` 配下）※未実装
+  - リファクタリングされたコード ※未実装
+- **詳細な手順**: `.claude/skills/refactoring/skill.md` を参照
 
-### 4. 新機能（Conjured items）を追加する
+### 3. 新機能（Conjured items）を追加する
 - **インプット**:
   - リファクタリング済みコード
   - 更新されたGherkin仕様書（Conjured items の仕様を追加）

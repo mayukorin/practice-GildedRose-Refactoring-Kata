@@ -38,7 +38,7 @@
 - **担当**: Claude主導、人間レビュー
 - **制約**: ドメイン分析テンプレート（`.claude/references/domain-analysis-template.md`）に従って分析資料を作成すること
 - **成果物**: `docs/refactoring/domain-analysis/[item-type].md`
-- **判定**:
+- **人間による判定**:
   - OK → 次のアイテムタイプへ（ステップ1に戻る）、または全アイテム完了後フェーズ2へ
   - NG → ステップ3のやり直し
 

@@ -48,19 +48,19 @@ docs/
 
 ## フェーズ3: テスト実装
 
-**詳細**: `agents/test-implementation.md` を参照
+**詳細**: `agents/test-implementation.md` を参照（※未実装）
 
 **目的**: Gherkin仕様書に基づいてJUnitテストを実装する
 
 ## フェーズ4: リファクタリング実行
 
-**詳細**: `agents/refactoring.md` を参照
+**詳細**: `agents/refactoring.md` を参照（※未実装）
 
 **目的**: テストをパスするように、小さなステップでリファクタリングする
 
 ## フェーズ5: レビュー
 
-**詳細**: `agents/review.md` を参照
+**詳細**: `agents/review.md` を参照（※未実装）
 
 **目的**: リファクタリング結果を評価し、改善点を記録する
 
