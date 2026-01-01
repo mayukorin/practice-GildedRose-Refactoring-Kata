@@ -48,7 +48,7 @@ docs/
 
 ## フェーズ3: テスト実装
 
-**詳細**: `agents/test-implementation.md` を参照（※未実装）
+**詳細**: `agents/test-implementation.md` を参照
 
 **目的**: Gherkin仕様書に基づいてJUnitテストを実装する
 
