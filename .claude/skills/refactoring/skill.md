@@ -31,6 +31,7 @@ docs/
     │   └── ...
     ├── class-design.md               # フェーズ2の成果物（全アイテム統合版）
     ├── test-plans/                   # フェーズ3の成果物
+    ├── implementation-tasks.md       # フェーズ4の成果物（実装タスク管理）
     └── reviews/                      # フェーズ5の成果物
 ```
 
@@ -54,7 +55,7 @@ docs/
 
 ## フェーズ4: リファクタリング実行
 
-**詳細**: `agents/refactoring.md` を参照（※未実装）
+**詳細**: `agents/refactoring.md` を参照
 
 **目的**: テストをパスするように、小さなステップでリファクタリングする
 
