@@ -133,7 +133,7 @@ Feature: Gilded Rose在庫品質管理システム
       And そのアイテムはコンサートを1日過ぎている
 
     Scenario: コンサート終了後で次の日も品質が0のまま
-      Given 品質が10の「Backstage passes to a TAFKAL80ETC concert」が存在する
+      Given 品質が0の「Backstage passes to a TAFKAL80ETC concert」が存在する
       And そのアイテムはコンサートを1日過ぎている
       When 1日経過する
       Then そのアイテムの品質は0である
@@ -222,7 +222,7 @@ Feature: Gilded Rose在庫品質管理システム
       And そのアイテムは販売期限を1日過ぎている
       When 1日経過する
       Then そのアイテムの品質は0である
-      And そのアイテムは販売期限を1日過ぎている
+      And そのアイテムは販売期限を2日過ぎている
 
     Scenario: 通常アイテムについて，販売期限を過ぎて品質が1の場合、次の日に-1にはならず0になる
       Given 品質が1の通常アイテムが存在する

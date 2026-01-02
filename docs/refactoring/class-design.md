@@ -51,12 +51,13 @@
 
 ```java
 public interface UpdateStrategy {
-    void update(Item item);
+    Item update(Item item);
 }
 ```
 
 - **目的**: アイテムの品質更新ロジックを抽象化する
-- **責務**: アイテムの更新処理の契約を定義する
+- **責務**: アイテムの更新処理の契約を定義する（新しいItemを返す）
+- **設計原則**: 副作用を避けるため、引数を変更せず新しいItemインスタンスを返す
 - **変更理由**: アイテム更新の共通インターフェースが変わる場合のみ
 
 #### 2.2.2 NormalItemStrategy
@@ -64,16 +65,20 @@ public interface UpdateStrategy {
 ```java
 public class NormalItemStrategy implements UpdateStrategy {
     @Override
-    public void update(Item item) {
+    public Item update(Item item) {
         // sellInを1減らす
         // qualityを期限に応じて減らす（期限内: -1、期限切れ: -2）
         // 下限0を維持する
+        // 新しいItemインスタンスを作成して返す
+        int newSellIn = item.sellIn - 1;
+        int newQuality = // 計算ロジック
+        return new Item(item.name, newSellIn, newQuality);
     }
 }
 ```
 
 - **目的**: 通常アイテムの品質更新ロジックを実装する
-- **責務**: 通常アイテムの sellIn と quality の更新（劣化ロジック）
+- **責務**: 通常アイテムの sellIn と quality を計算し、新しいItemを返す（劣化ロジック）
 - **変更理由**: 通常アイテムの品質劣化ルールが変わる場合のみ
 
 #### 2.2.3 AgedBrieStrategy
@@ -81,16 +86,20 @@ public class NormalItemStrategy implements UpdateStrategy {
 ```java
 public class AgedBrieStrategy implements UpdateStrategy {
     @Override
-    public void update(Item item) {
+    public Item update(Item item) {
         // sellInを1減らす
         // qualityを期限に応じて増やす（期限内: +1、期限切れ: +2）
         // 上限50を維持する
+        // 新しいItemインスタンスを作成して返す
+        int newSellIn = item.sellIn - 1;
+        int newQuality = // 計算ロジック
+        return new Item(item.name, newSellIn, newQuality);
     }
 }
 ```
 
 - **目的**: Aged Brieの品質更新ロジックを実装する
-- **責務**: Aged Brieの sellIn と quality の更新（熟成ロジック）
+- **責務**: Aged Brieの sellIn と quality を計算し、新しいItemを返す（熟成ロジック）
 - **変更理由**: Aged Brieの品質向上ルールが変わる場合のみ
 
 #### 2.2.4 SulfurasStrategy
@@ -98,13 +107,14 @@ public class AgedBrieStrategy implements UpdateStrategy {
 ```java
 public class SulfurasStrategy implements UpdateStrategy {
     @Override
-    public void update(Item item) {
-        // 何もしない（不変）
+    public Item update(Item item) {
+        // Sulfurasは不変なので、同じItemをそのまま返す
+        return item;
     }
 }
 ```
 
-- **目的**: Sulfurasの品質更新ロジックを実装する（実際には何もしない）
+- **目的**: Sulfurasの品質更新ロジックを実装する（実際には元のItemを返す）
 - **責務**: Sulfurasの不変性を保証する
 - **変更理由**: Sulfurasの不変性ルールが変わる場合のみ（通常は変更されない）
 
@@ -113,7 +123,7 @@ public class SulfurasStrategy implements UpdateStrategy {
 ```java
 public class BackstagePassesStrategy implements UpdateStrategy {
     @Override
-    public void update(Item item) {
+    public Item update(Item item) {
         // sellInを1減らす
         // sellInの値に応じてqualityを増やす
         //   - 11日以上前: +1
@@ -121,12 +131,16 @@ public class BackstagePassesStrategy implements UpdateStrategy {
         //   - 5日以内: +3
         //   - 終了後: 0（ゼロ化）
         // 上限50を維持する
+        // 新しいItemインスタンスを作成して返す
+        int newSellIn = item.sellIn - 1;
+        int newQuality = // 計算ロジック
+        return new Item(item.name, newSellIn, newQuality);
     }
 }
 ```
 
 - **目的**: Backstage Passesの品質更新ロジックを実装する
-- **責務**: Backstage Passesの sellIn と quality の更新（段階的向上とゼロ化ロジック）
+- **責務**: Backstage Passesの sellIn と quality を計算し、新しいItemを返す（段階的向上とゼロ化ロジック）
 - **変更理由**: Backstage Passesの品質変化ルール（閾値や増加量）が変わる場合のみ
 
 #### 2.2.6 StrategyFactory
@@ -163,16 +177,17 @@ public class GildedRose {
     }
 
     public void updateQuality() {
-        for (Item item : items) {
-            UpdateStrategy strategy = StrategyFactory.getStrategy(item);
-            strategy.update(item);
+        for (int i = 0; i < items.length; i++) {
+            UpdateStrategy strategy = StrategyFactory.getStrategy(items[i]);
+            items[i] = strategy.update(items[i]);
         }
     }
 }
 ```
 
 - **目的**: 在庫アイテムの一括更新を管理する
-- **責務**: アイテム配列を保持し、各アイテムに対して適切なストラテジーを適用する
+- **責務**: アイテム配列を保持し、各アイテムに対して適切なストラテジーを適用し、更新されたItemで配列を更新する
+- **設計原則**: 各ストラテジーから返された新しいItemで配列を更新することで、イミュータブルな設計を実現
 - **変更理由**: 在庫管理の全体的なフローが変わる場合のみ
 
 ### 2.3 クラス図
