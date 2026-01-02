@@ -67,7 +67,8 @@ docs/
     ├── domain-analysis/       # ドメイン分析資料（アイテム毎）
     │   └── [item-type].md
     ├── class-design.md        # クラス設計書（全アイテム統合版）
-    ├── test-plans/            # テスト実装計画（未実装）
+    ├── test-plans/            # テスト実装計画
+    ├── implementation-tasks.md # 実装タスク管理（フェーズ4）
     └── reviews/               # レビュー記録（未実装）
 ```
 
