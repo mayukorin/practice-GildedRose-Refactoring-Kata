@@ -11,10 +11,10 @@ public class SulfurasTest {
     public void testQualityAndSellInNeverChange() {
         // Given: 初期状態の準備
         final Item item = new Item("Sulfuras, Hand of Ragnaros", 0, 80);
-        final var strategy = new SulfurasStrategy();
+        final SulfurasStrategy strategy = new SulfurasStrategy();
 
         // When: 操作の実行
-        final var updatedItem = strategy.update(item);
+        final Item updatedItem = strategy.update(item);
 
         // Then: 結果の検証
         assertEquals(0, updatedItem.sellIn, "sellInは変化しない");
@@ -25,11 +25,11 @@ public class SulfurasTest {
     @DisplayName("sellInが正の値でも、次の日になっても品質が80のまま、sellInも変化しない")
     public void testQualityAndSellInNeverChangeWithPositiveSellIn() {
         // Given: 初期状態の準備
-        final var item = new Item("Sulfuras, Hand of Ragnaros", 5, 80);
-        final var strategy = new SulfurasStrategy();
+        final Item item = new Item("Sulfuras, Hand of Ragnaros", 5, 80);
+        final SulfurasStrategy strategy = new SulfurasStrategy();
 
         // When: 操作の実行
-        final var updatedItem = strategy.update(item);
+        final Item updatedItem = strategy.update(item);
 
         // Then: 結果の検証
         assertEquals(5, updatedItem.sellIn, "sellInは変化しない");
@@ -40,11 +40,11 @@ public class SulfurasTest {
     @DisplayName("sellInが負の値でも、次の日になっても品質が80のまま、sellInも変化しない")
     public void testQualityAndSellInNeverChangeWithNegativeSellIn() {
         // Given: 初期状態の準備
-        final var item = new Item("Sulfuras, Hand of Ragnaros", -5, 80);
-        final var strategy = new SulfurasStrategy();
+        final Item item = new Item("Sulfuras, Hand of Ragnaros", -5, 80);
+        final SulfurasStrategy strategy = new SulfurasStrategy();
 
         // When: 操作の実行
-        final var updatedItem = strategy.update(item);
+        final Item updatedItem = strategy.update(item);
 
         // Then: 結果の検証
         assertEquals(-5, updatedItem.sellIn, "sellInは変化しない");

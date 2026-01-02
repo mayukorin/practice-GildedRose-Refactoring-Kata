@@ -1,0 +1,2 @@
+### 問題点
+- タスクリストを元に自動でどんどん実装に進んでしまう．skills/refactoring/agents/refactoring.md では，「4-3: テストの実行（Green状態の確認）」で人間レビューを挟みたいのに，コードをOKしたらすぐに次のタスクリストにclaudeが取り掛かっていしまう．手順がタスクリストとagents/refactoring.mdの2つに分かれてることが原因？
