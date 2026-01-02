@@ -69,8 +69,8 @@
 - **担当**: Claude主導、人間レビュー
 - **制約**:
   - **クラス設計書で定義されたクラス/インターフェースを前提とする**
-  - クラス設計書で定義されたクラス/メソッドはまだ実装されていないため、テストは失敗する（コンパイルエラーまたはRed状態）
   - JUnit 5の機能を活用する（`@ParameterizedTest`, `@DisplayName` など）
+  - 必要に応じて，Javaの書き方ベストプラクティス（`.claude/skills/refactoring/references/java-best-practices.md`）を参照すること
 - **成果物**: `Java/src/test/java/com/gildedrose/[ItemType]Test.java`
 - **人間による判定**:
   - OK → 次のアイテムタイプへ（ステップ4-1に戻る）、または全アイテム完了後ステップ5へ
