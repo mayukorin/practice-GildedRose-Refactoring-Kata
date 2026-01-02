@@ -7,12 +7,12 @@
 
 ## 全体の進行状況
 
-- [ ] ステップ1: 環境設定（Java 11への変更）
-- [ ] ステップ2: UpdateStrategyインターフェースの作成
-- [ ] ステップ3: SulfurasStrategyの実装
-- [ ] ステップ4: NormalItemStrategyの実装
-- [ ] ステップ5: AgedBrieStrategyの実装
-- [ ] ステップ6: BackstagePassesStrategyの実装
+- [x] ステップ1: 環境設定（Java 11への変更）
+- [x] ステップ2: UpdateStrategyインターフェースの作成
+- [x] ステップ3: SulfurasStrategyの実装
+- [x] ステップ4: NormalItemStrategyの実装
+- [x] ステップ5: AgedBrieStrategyの実装
+- [x] ステップ6: BackstagePassesStrategyの実装
 - [ ] ステップ7: StrategyFactoryの実装
 - [ ] ステップ8: GildedRoseクラスのリファクタリング
 
@@ -113,18 +113,18 @@
 ## リファクタリングステップ#5: AgedBrieStrategyの実装
 
 ### タスク一覧
-- [ ] `Java/src/main/java/com/gildedrose/AgedBrieStrategy.java` を作成する
-- [ ] `UpdateStrategy` インターフェースを実装する
-- [ ] `update(Item item)` メソッドで、以下のロジックを実装する:
+- [x] `Java/src/main/java/com/gildedrose/AgedBrieStrategy.java` を作成する
+- [x] `UpdateStrategy` インターフェースを実装する
+- [x] `update(Item item)` メソッドで、以下のロジックを実装する:
   - sellInを1減らす
   - 期限内（sellIn >= 0）: qualityを1増やす
   - 期限切れ（sellIn < 0）: qualityを2増やす
   - qualityの上限50を維持する
   - 新しいItemインスタンスを返す
-- [ ] （必要に応じて）Javaベストプラクティス（`.claude/skills/refactoring/references/java-best-practices.md`）を参照する
-- [ ] テストの実行（`./gradlew test`）
-- [ ] テスト結果の確認（AgedBrieTest の全テストがパスすること）
-- [ ] **【人間レビュー】コードとテスト結果のレビュー → OKなら次のステップへ**
+- [x] （必要に応じて）Javaベストプラクティス（`.claude/skills/refactoring/references/java-best-practices.md`）を参照する
+- [x] テストの実行（`./gradlew test`）
+- [x] テスト結果の確認（AgedBrieTest の全テストがパスすること）
+- [x] **【人間レビュー】コードとテスト結果のレビュー → OKなら次のステップへ**
 
 ### このステップで通るはずのテスト一覧
 - `AgedBrieTest.testQualityIncreasesByOneBeforeSellDate`
@@ -144,9 +144,9 @@
 ## リファクタリングステップ#6: BackstagePassesStrategyの実装
 
 ### タスク一覧
-- [ ] `Java/src/main/java/com/gildedrose/BackstagePassesStrategy.java` を作成する
-- [ ] `UpdateStrategy` インターフェースを実装する
-- [ ] `update(Item item)` メソッドで、以下のロジックを実装する:
+- [x] `Java/src/main/java/com/gildedrose/BackstagePassesStrategy.java` を作成する
+- [x] `UpdateStrategy` インターフェースを実装する
+- [x] `update(Item item)` メソッドで、以下のロジックを実装する:
   - sellInを1減らす
   - sellInに応じたquality増加ロジック:
     - 11日以上前（sellIn >= 11）: +1
@@ -155,10 +155,10 @@
     - 終了後（sellIn < 0）: 0（ゼロ化）
   - qualityの上限50を維持する（ゼロ化を除く）
   - 新しいItemインスタンスを返す
-- [ ] （必要に応じて）Javaベストプラクティス（`.claude/skills/refactoring/references/java-best-practices.md`）を参照する
-- [ ] テストの実行（`./gradlew test`）
-- [ ] テスト結果の確認（BackstagePassesTest の全テストがパスすること）
-- [ ] **【人間レビュー】コードとテスト結果のレビュー → OKなら次のステップへ**
+- [x] （必要に応じて）Javaベストプラクティス（`.claude/skills/refactoring/references/java-best-practices.md`）を参照する
+- [x] テストの実行（`./gradlew test`）
+- [x] テスト結果の確認（BackstagePassesTest の全テストがパスすること）
+- [x] **【人間レビュー】コードとテスト結果のレビュー → OKなら次のステップへ**
 
 ### このステップで通るはずのテスト一覧
 - `BackstagePassesTest.testQualityIncreasesByOneWhen11DaysOrMore`
@@ -186,16 +186,15 @@
 ## リファクタリングステップ#7: StrategyFactoryの実装
 
 ### タスク一覧
-- [ ] `Java/src/main/java/com/gildedrose/StrategyFactory.java` を作成する
-- [ ] `static UpdateStrategy getStrategy(Item item)` メソッドを実装する
-- [ ] アイテム名に基づいて適切なストラテジーを返すロジックを実装:
+- [x] `Java/src/main/java/com/gildedrose/StrategyFactory.java` を作成する
+- [x] `static UpdateStrategy getStrategy(Item item)` メソッドを実装する
+- [x] アイテム名に基づいて適切なストラテジーを返すロジックを実装:
   - "Sulfuras, Hand of Ragnaros" → `SulfurasStrategy`
   - "Aged Brie" → `AgedBrieStrategy`
   - "Backstage passes" で始まる → `BackstagePassesStrategy`
   - その他 → `NormalItemStrategy`
-- [ ] （必要に応じて）Javaベストプラクティス（`.claude/skills/refactoring/references/java-best-practices.md`）を参照する
-- [ ] 簡単な単体テスト（または手動確認）でFactoryの動作を確認する
-- [ ] **【人間レビュー】コードとテスト結果のレビュー → OKなら次のステップへ**
+- [x] 簡単な単体テスト（または手動確認）でFactoryの動作を確認する
+- [x] **【人間レビュー】コードとテスト結果のレビュー → OKなら次のステップへ**
 
 ### このステップで通るはずのテスト一覧
 すべて（引き続きパス）
@@ -208,7 +207,7 @@
 ## リファクタリングステップ#8: GildedRoseクラスのリファクタリング
 
 ### タスク一覧
-- [ ] `GildedRose.java` の `updateQuality()` メソッドを以下のように書き換える:
+- [x] `GildedRose.java` の `updateQuality()` メソッドを以下のように書き換える:
   ```java
   public void updateQuality() {
       for (int i = 0; i < items.length; i++) {
@@ -217,12 +216,11 @@
       }
   }
   ```
-- [ ] 元の複雑なロジックをコメントアウトして残す（比較用）
-- [ ] （必要に応じて）Javaベストプラクティス（`.claude/skills/refactoring/references/java-best-practices.md`）を参照する
-- [ ] テストの実行（`./gradlew test`）
-- [ ] テスト結果の確認（すべてのテストがパスすること）
-- [ ] TextTestフィクスチャを実行し、出力が既存のゴールデンマスターと一致することを確認する（オプション）
-- [ ] **【人間レビュー】コードとテスト結果のレビュー → OKなら次のステップへ**
+- [x] 元の複雑なロジックをコメントアウトして残す（比較用）
+- [x] テストの実行（`./gradlew test`）
+- [x] テスト結果の確認（すべてのテストがパスすること）
+- [x] TextTestフィクスチャを実行し、出力が既存のゴールデンマスターと一致することを確認する（オプション）
+- [x] **【人間レビュー】コードとテスト結果のレビュー → OKなら次のステップへ**
 
 ### このステップで通るはずのテスト一覧
 すべて
@@ -263,6 +261,24 @@
 
 - **下限0**: `Math.max(0, newQuality)` を使用
 - **上限50**: `Math.min(50, newQuality)` を使用
+
+### 人間レビューの扱い方（重要）
+
+各ステップの最後には必ず人間レビューのタスクがあります。Claudeは以下のように振る舞うこと：
+
+1. **レビュー依頼で終わる**:
+   - ステップの全タスクが完了したら、実装内容とテスト結果をまとめて提示する
+   - 「レビューをお願いします。問題なければ、ステップ#N（次のステップ名）に進みます。」と明示的に問いかけて終わる
+   - レビュー依頼後は、人間の応答を待つ
+
+2. **コード修正のOKと次のステップへのOKを区別する**:
+   - 人間が「OK」と言った場合、それは「このステップのレビューOK」であって「次のステップに進んでOK」ではない
+   - レビュー中にコード修正を求められ、修正後に「OK」をもらっても、再度「レビューをお願いします」と問いかける
+   - 次のステップに進むのは、人間が明示的に「次のステップに進んでください」または「次へ」と言った場合のみ
+
+3. **人間レビューのチェックボックスは更新しない**:
+   - 人間レビューのチェックボックス（`- [ ] **【人間レビュー】...`）は、Claudeが自動でチェックを付けてはいけない
+   - 人間がレビュー後に自分でチェックする
 
 ---
 

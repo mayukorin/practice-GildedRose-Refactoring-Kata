@@ -153,7 +153,7 @@ public class StrategyFactory {
             return new SulfurasStrategy();
         } else if (item.name.equals("Aged Brie")) {
             return new AgedBrieStrategy();
-        } else if (item.name.startsWith("Backstage passes")) {
+        } else if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
             return new BackstagePassesStrategy();
         } else {
             return new NormalItemStrategy();

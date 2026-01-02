@@ -76,8 +76,10 @@
 - **内容**:
   - 実装タスクリスト（`docs/refactoring/implementation-tasks.md`）に従って、1ステップずつ実装する
     - 必要に応じて、Javaの書き方ベストプラクティス（`.claude/skills/refactoring/references/java-best-practices.md`）を参照すること
+  - **各タスク完了時は必ず`docs/refactoring/implementation-tasks.md`のチェックボックスを更新すること**
+    - Editツールを使って、完了したタスクを`- [ ]`から`- [x]`に変更する
+    - ただし、**人間レビューのチェックボックスは、Claudeが自動でチェックを付けてはいけない**
   - 各ステップ完了後、**必ず人間レビューを待つ**（タスクリストに「【人間レビュー】」として明記されている）
-  - **人間レビューのチェックボックスは、Claudeが自動でチェックを付けてはいけない**
 - **制約**:
   - **Item.javaは絶対に変更してはいけない**
   - クラス設計書（`docs/refactoring/class-design.md`）で定義された設計に従うこと
